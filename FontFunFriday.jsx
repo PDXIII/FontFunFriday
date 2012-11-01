@@ -56,34 +56,36 @@ var black25 = doc.colors.add({
   colorValue:[0,0,0,25]});
 
 // text styles
+var paraStyleBasicFontStyle = doc.paragraphStyles.add({
+  name: "BasicFontStyle",
+  pointSize: 6
+  fillColor: "black25",
+});
 var paraStyleFontName = doc.paragraphStyles.add({
   name: "FontName",
+  basedOn: paraStyleBasicFontStyle,
   pointSize: 18,
-  fillColor: "black25",
   justification: Justification.LEFT_ALIGN
 });
 var paraStyleFontMetrics = doc.paragraphStyles.add({
   name: "FontMetrics",
-  pointSize: 6,
-  fillColor: "black25",
+  basedOn: paraStyleBasicFontStyle,
   justification: Justification.CENTER_JUSTIFIED
 });
 var paraStyleGlyph = doc.paragraphStyles.add({
   name: "Glyph",
-  pointSize: 6,
-  fillColor: "black25",
+  basedOn: paraStyleBasicFontStyle,
   justification: Justification.CENTER_ALIGN
 });
 var paraStyleName = doc.paragraphStyles.add({
   name: "GlyphName",
-  pointSize: 6,
+  basedOn: paraStyleBasicFontStyle,
   fillColor: "Paper",
   justification: Justification.CENTER_ALIGN
 });
 var paraStyleNumber = doc.paragraphStyles.add({
   name: "GlyphNumber",
-  pointSize: 6,
-  fillColor: "black25",
+  basedOn: paraStyleBasicFontStyle,
   justification: Justification.CENTER_ALIGN
 });
 
