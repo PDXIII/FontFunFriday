@@ -93,6 +93,7 @@ var paraStyleName = doc.paragraphStyles.add({
   justification: Justification.CENTER_ALIGN
 });
 
+//masterspread (Master-A) just the margins
 doc.masterSpreads.item(0).pages.item(0).marginPreferences.properties = {
   top : topMargin,
   bottom : bottomMargin,
@@ -160,16 +161,24 @@ var currentPage = doc.pages.item(0);
 main();
 
 function main(){
+  //for the cover
   var firstPage = doc.pages.item(0);
   firstPage.appliedMaster = doc.masterSpreads.item(0);
+  // dialog for unicode information display
   displayUnicodeNumber = unicodeInfo();
+
   makeMasters();
-  // return;
   makeGuideLines();
+
+  //for the back
   var lastPage = doc.pages.add();
   lastPage.appliedMaster = doc.masterSpreads.item(0);
 };
 
+/**
+ * [this function ask you how you want the unicode information to be displayed]
+ * @return {[boolean]} [returns true or false to displayUnicodeNumber]
+ */
 function unicodeInfo(){
   var w = new Window ("dialog","Unicode Info");
   w.orientation = "column";
