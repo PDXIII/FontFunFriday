@@ -7,8 +7,6 @@ FontFunFriday
 
 ##Hello!
 
-![PDXIII-Avatar][PDXIII-Avatar]
-
 I am [PDXIII](http://about.me/PDXIII) & and this is **Font Fun Friday!**
 
 ##What's that all about?
