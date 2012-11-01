@@ -180,11 +180,11 @@ The above copyright notice and this permission notice shall be included in all c
 
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-[dialog]: dialog.png
-[metrics]: metrics.png
-[tile1]: tile1.png
-[tile2]: tile2.png
-[grid]: grid.png
-[masters]: masters.png
-[objectStyles]: objectStyles.png
-[paraStyles]: paraStyles.png
+[dialog]: tree/master/images/dialog.png
+[metrics]: tree/master/images/metrics.png
+[tile1]: tree/master/images/tile1.png
+[tile2]: tree/master/images/tile2.png
+[grid]: tree/master/images/grid.png
+[masters]: tree/master/images/masters.png
+[objectStyles]: tree/master/images/objectStyles.png
+[paraStyles]: tree/master/images/paraStyles.png
