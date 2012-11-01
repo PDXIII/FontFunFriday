@@ -180,11 +180,11 @@ The above copyright notice and this permission notice shall be included in all c
 
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-[dialog]: blob/master/images/dialog.png
-[metrics]: blob/master/images/metrics.png
-[tile1]: blob/master/images/tile1.png
-[tile2]: blob/master/images/tile2.png
-[grid]: blob/master/images/grid.png
-[masters]: blob/master/images/masters.png
-[objectStyles]: blob/master/images/objectStyles.png
-[paraStyles]: blob/master/images/paraStyles.png
+[dialog]: https://raw.github.com/PDXIII/FontFunFriday/master/images/dialog.png
+[metrics]: https://raw.github.com/PDXIII/FontFunFriday/master/images/metrics.png
+[tile1]: https://raw.github.com/PDXIII/FontFunFriday/master/images/tile1.png
+[tile2]: https://raw.github.com/PDXIII/FontFunFriday/master/images/tile2.png
+[grid]: https://raw.github.com/PDXIII/FontFunFriday/master/images/grid.png
+[masters]: https://raw.github.com/PDXIII/FontFunFriday/master/images/masters.png
+[objectStyles]: https://raw.github.com/PDXIII/FontFunFriday/master/images/objectStyles.png
+[paraStyles]: https://raw.github.com/PDXIII/FontFunFriday/master/images/paraStyles.png
