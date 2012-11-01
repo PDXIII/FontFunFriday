@@ -155,7 +155,6 @@ var objStylePLine = doc.objectStyles.add({
 });
 
 var masterPageIndex = 0;
-// doc.pages.add();
 
 var currentPage = doc.pages.item(0);
 
@@ -201,22 +200,17 @@ function unicodeInfo(){
  * [makeMasters this function builds the masterpages and calls the function for the scribble tiles for each glyph]
  */
 function makeMasters(){
-
   // move the ruler to top left corner of the page for better handling
   doc.viewPreferences.rulerOrigin = RulerOrigin.PAGE_ORIGIN;
-
   // set path to JSON file
   var filepath = script_file_path + "/GlyphsList-UniCode.json";
   var glyphList = loadJSONObject(filepath);
-
   // this calculates the least amount of pages for the glyphs
   var maxMasterPages = Math.ceil(glyphList.length/(tileRows*tileColumns));
-
   doc.masterSpreads.add();
-
   var glyphIndex = 0;
-  for(var j = 0; j < maxMasterPages; j++){
 
+  for(var j = 0; j < maxMasterPages; j++){
     var currentMasterPage = doc.masterSpreads.item(1).pages.item(masterPageIndex);
     currentMasterPage.marginPreferences.properties = {
       top : topMargin,
@@ -226,7 +220,6 @@ function makeMasters(){
       columnCount : tileColumns,
       columnGutter : gutter
     };
-
     for(var currentRow = 0; currentRow < tileRows; currentRow++){
       for(var currentColumn = 0; currentColumn < tileColumns; currentColumn++){
         try{
@@ -267,7 +260,6 @@ function makeTileGroupArrayWithNumber(cGlyph, cPage){
   });
   myRect.appliedObjectStyle = objStyleScribbleField;
   cGroup.push(myRect);
-
   // make textFrame for the glyph/character
   var glyph_textFrame = cPage.textFrames.add({
     geometricBounds: [20,0,tileHeight,9],
@@ -275,7 +267,6 @@ function makeTileGroupArrayWithNumber(cGlyph, cPage){
   });
   glyph_textFrame.paragraphs.everyItem().appliedParagraphStyle = paraStyleGlyph;
   cGroup.push(glyph_textFrame);
-
   // make textFrame for the unicode number
   var number_textFrame = cPage.textFrames.add({
     geometricBounds: [20, 9, tileHeight, 18],
@@ -283,7 +274,6 @@ function makeTileGroupArrayWithNumber(cGlyph, cPage){
   });
   number_textFrame.paragraphs.everyItem().appliedParagraphStyle = paraStyleNumber;
   cGroup.push(number_textFrame);
-
   // return the array
   return cGroup;
 }
@@ -296,7 +286,6 @@ function makeTileGroupArrayWithName(cGlyph, cPage){
   });
   myRect.appliedObjectStyle = objStyleScribbleField;
   cGroup.push(myRect);
-
   // make textFrame for the glyph name
   var glyph_textFrame = cPage.textFrames.add({
     geometricBounds: [14,0,19,18],
@@ -304,20 +293,16 @@ function makeTileGroupArrayWithName(cGlyph, cPage){
   });
   glyph_textFrame.paragraphs.everyItem().appliedParagraphStyle = paraStyleName;
   cGroup.push(glyph_textFrame);
-
   // return the array
   return cGroup;
 }
 
 function makeGuideLines(){
-
   // set path to JSON file
   var filepath = script_file_path + "/FontList.json";
   var fontList = loadJSONObject(filepath);
 
   for(var fontIndex = 0; fontIndex < fontList.length; fontIndex++){
-
-
     // get the font you want the metrics from
     var currentFont = fontList[fontIndex];
     for(var i = 0; i < 2; i++){
@@ -326,17 +311,30 @@ function makeGuideLines(){
       // apply the master for the left page
       currentPage.appliedMaster = doc.masterSpreads.item(1);
        // get the name of the current font 
+       // 
       var fontName = currentFont.FontName.toString();
       // and put it in a textframe on top of the page
-      var fontNameFrame = currentPage.textFrames.add({
-        geometricBounds: [gutter*2, leftMargin, topMargin - gutter, pageWidth-rightMargin],
-        contents: funSentence + fontName
-      });
-
+      if(i == 0){
+        var fontNameFrame = currentPage.textFrames.add({
+          geometricBounds: [gutter*2, leftMargin, topMargin - gutter, pageWidth-rightMargin],
+          contents: funSentence + fontName
+        });
       fontNameFrame.paragraphs.everyItem().appliedParagraphStyle = doc.paragraphStyles.itemByName("FontName");
+      }
+      // or a metrics info textframe at the bottom
+      else{
+        var fontMetrics = '\tH: '+currentFont.HkxpArray[0].toFixed(3)
+          + '\tk: '+currentFont.HkxpArray[1].toFixed(3)
+          + '\tx: '+currentFont.HkxpArray[2].toFixed(3)
+          + '\tp: '+currentFont.HkxpArray[3].toFixed(3);
+        var fontMetricsFrame = currentPage.textFrames.add({
+          geometricBounds: [pageHeight-bottomMargin+(gutter/2), pageWidth/2, pageHeight - gutter, pageWidth-rightMargin],
+          contents: fontMetrics
+        });
+        fontMetricsFrame.paragraphs.everyItem().appliedParagraphStyle = doc.paragraphStyles.itemByName("FontMetrics");
+      }
       for(var currentRow = 0; currentRow < tileRows; currentRow++){
         for(var currentColumn = 0; currentColumn < tileColumns; currentColumn++){
-        
           // make theLineGroup
             var lineGroupArray = makeALineGroupArray(currentFont.HkxpArray)
           var theLineGroup = currentPage.groups.add(lineGroupArray);
@@ -345,36 +343,12 @@ function makeGuideLines(){
         }
       }
     }
-
-
-    // for(var row_index = 0; row_index < 8; row_index++){
-    //   for (var coloumn_index = 0; coloumn_index < 0; i++) {
-    //   // duplicate Group to position
-    //     currentPage.groups.lastItem().duplicate(undefined, [(leftMargin + (tileWidth + gutter) * coloumn_index),(row_index * tileHeight)]);
-    //   };
-      
-    // }
-    // // remove the first goup because we dont need it any more
-    // currentPage.groups.firstItem().remove();
-    // //making the facing page
-    // currentPage = doc.pages.add();
-    // currentPage.appliedMaster = doc.masterSpreads.item(1);
-
-    var fontMetrics = '\tH: '+currentFont.HkxpArray[0].toFixed(3)
-      + '\tk: '+currentFont.HkxpArray[1].toFixed(3)
-      + '\tx: '+currentFont.HkxpArray[2].toFixed(3)
-      + '\tp: '+currentFont.HkxpArray[3].toFixed(3);
-    var fontMetricsFrame = currentPage.textFrames.add({
-      geometricBounds: [pageHeight-bottomMargin+(gutter/2), pageWidth/2, pageHeight - gutter, pageWidth-rightMargin],
-      contents: fontMetrics
-    });
-    fontMetricsFrame.paragraphs.everyItem().appliedParagraphStyle = doc.paragraphStyles.itemByName("FontMetrics");
   }
 }
 
+
 function makeALineGroupArray(HkxpArray){
   var lineArray = new Array();
-
     // make the baseline
     lineArray.push(makeALine(0));
     // make the other metric lines with the makeALine function
@@ -387,30 +361,24 @@ function makeALineGroupArray(HkxpArray){
     lineArray[2].appliedObjectStyle = doc.objectStyles.itemByName("k height (ascenders)");
     lineArray[3].appliedObjectStyle = doc.objectStyles.itemByName("x height");
     lineArray[4].appliedObjectStyle = doc.objectStyles.itemByName("p height (descenders)");
-
     return lineArray;
 }
+
 /**
  * [makeALine this function make a horizontal line at a given y position]
  * @param  {[float]} metricsValue [this serves as y position]
  * @return {[GraphicLine]}
  */
 function makeALine(metricsValue){
-
   var lineYpos = (metricsValue.toFixed(2) * (-scribbleHeight)) + baseLineOffset;
-
   var currentLine = currentPage.graphicLines.add();
   var currentPath = currentLine.paths[0];
   var point01 = currentPath.pathPoints[0];
   var point02 = currentPath.pathPoints[1];
   point01.anchor = [0,lineYpos];
   point02.anchor = [tileWidth ,lineYpos];
-
-  // currentLine.appliedObjectStyle = doc.objectStyles.itemByName("baseline");
-
   return currentLine;
 }
-
 
 /**
  * [loadJSONObject is a function to load a JSONfile and return a JSONObject]
@@ -419,7 +387,6 @@ function makeALine(metricsValue){
  */
 function loadJSONObject(filepath){
   var myJSONfile = File(filepath);
-
   if(myJSONfile != false){
     myJSONfile.open('r');
     myJSONObject = eval("{" + myJSONfile.read() + "}");
