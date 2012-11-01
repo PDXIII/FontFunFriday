@@ -3,6 +3,10 @@ FontFunFriday
 
 ###A Adobe Indesign script for font nerds.
 
+##Hello!
+
+I am [PDXIII](http://about.me/PDXIII)!
+
 ##What's that all about?
 When you scribble a font, you quickly come to a point where you need a base line or a guide for the x height and for the descenders …
 But where to place them? This decision takes big influence on the whole font design. So why don't you check out the guides of some famous fonts?
