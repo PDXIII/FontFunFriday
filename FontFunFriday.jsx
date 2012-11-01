@@ -18,8 +18,8 @@ var displayUnicodeNumber = true;
 // tile grid preferences
 var tileColumns = 6;
 var tileRows = 8;
-var tileXsize = 18;
-var tileYsize = 23;
+var tileWidth = 18;
+var tileHeight = 23;
 var baseLineOffset = 13;
 var scribbleHeight = 10;
 
@@ -32,7 +32,7 @@ var leftMargin = 11;
 var rightMargin = 11;
 var facingPages = true;
 var startPageNumber = 1;
-var gutter = (pageWidth - (tileXsize * tileColumns) - leftMargin -rightMargin) / (tileColumns-1);
+var gutter = (pageWidth - (tileWidth * tileColumns) - leftMargin -rightMargin) / (tileColumns-1);
 
 var doc = app.documents.add({
   documentPreferences:{
@@ -42,11 +42,30 @@ var doc = app.documents.add({
     startPageNumber: startPageNumber
   },
   gridPreferences:{
-      baselineDivision: tileYsize,
+      baselineDivision: tileHeight,
       baselineStart: topMargin,
       baselineGridShown : true
     }
 });
+
+//masterspread (Master-A) just the margins
+doc.masterSpreads.item(0).pages.item(0).marginPreferences.properties = {
+  top : topMargin,
+  bottom : bottomMargin,
+  left : leftMargin,
+  right : rightMargin,
+  columnCount : tileColumns,
+  columnGutter : gutter
+};
+
+doc.masterSpreads.item(0).pages.item(1).marginPreferences.properties = {
+  top : topMargin,
+  bottom : bottomMargin,
+  left : leftMargin,
+  right : rightMargin,
+  columnCount : tileColumns,
+  columnGutter : gutter
+};
 
 // colors
 var black25 = doc.colors.add({
@@ -93,24 +112,6 @@ var paraStyleName = doc.paragraphStyles.add({
   justification: Justification.CENTER_ALIGN
 });
 
-//masterspread (Master-A) just the margins
-doc.masterSpreads.item(0).pages.item(0).marginPreferences.properties = {
-  top : topMargin,
-  bottom : bottomMargin,
-  left : leftMargin,
-  right : rightMargin,
-  columnCount : tileColumns,
-  columnGutter : gutter
-};
-
-doc.masterSpreads.item(0).pages.item(1).marginPreferences.properties = {
-  top : topMargin,
-  bottom : bottomMargin,
-  left : leftMargin,
-  right : rightMargin,
-  columnCount : tileColumns,
-  columnGutter : gutter
-};
 
 // object styles
 var objStyleScribbleField = doc.objectStyles.add({
@@ -215,27 +216,25 @@ function makeMasters(){
 
   var glyphIndex = 0;
   for(var j = 0; j < maxMasterPages; j++){
+
+    var currentMasterPage = doc.masterSpreads.item(1).pages.item(masterPageIndex);
+    currentMasterPage.marginPreferences.properties = {
+      top : topMargin,
+      bottom : bottomMargin,
+      left : leftMargin,
+      right : rightMargin,
+      columnCount : tileColumns,
+      columnGutter : gutter
+    };
+
     for(var currentRow = 0; currentRow < tileRows; currentRow++){
-      
-      for(var current_Column = 0; current_Column < tileColumns; current_Column++){
-
-        var currentMasterPage = doc.masterSpreads.item(1).pages.item(masterPageIndex);
-        currentMasterPage.marginPreferences.properties = {
-          top : topMargin,
-          bottom : bottomMargin,
-          left : leftMargin,
-          right : rightMargin,
-          columnCount : tileColumns,
-          columnGutter : gutter
-        };
-
+      for(var currentColumn = 0; currentColumn < tileColumns; currentColumn++){
         try{
           var current_Glyph = glyphList[glyphIndex];
         }
         catch(err){
           alert("End of File!");
         }
-
         // make theTileGroup
         if(!displayUnicodeNumber){
           var tileGroupArray = makeTileGroupArrayWithName(current_Glyph,currentMasterPage)
@@ -243,10 +242,9 @@ function makeMasters(){
         else{
           var tileGroupArray = makeTileGroupArrayWithNumber(current_Glyph,currentMasterPage)
         }
-
         var theTileGroup = currentMasterPage.groups.add(tileGroupArray);
         // move theTileGroup to its position
-        theTileGroup.move(undefined, [leftMargin + currentMasterPage.marginPreferences.columnsPositions[current_Column * 2], currentRow * tileYsize + topMargin]);
+        theTileGroup.move(undefined, [leftMargin + currentMasterPage.marginPreferences.columnsPositions[currentColumn * 2], currentRow * tileHeight + topMargin]);
 
         glyphIndex++;
       }
@@ -265,14 +263,14 @@ function makeTileGroupArrayWithNumber(cGlyph, cPage){
   var cGroup = new Array();
   // make rectangle for the ScribbleField
   var myRect = cPage.rectangles.add({
-    geometricBounds:[0,0,19,tileXsize],
+    geometricBounds:[0,0,19,tileWidth],
   });
   myRect.appliedObjectStyle = objStyleScribbleField;
   cGroup.push(myRect);
 
   // make textFrame for the glyph/character
   var glyph_textFrame = cPage.textFrames.add({
-    geometricBounds: [20,0,tileYsize,9],
+    geometricBounds: [20,0,tileHeight,9],
     contents: cGlyph.glyph
   });
   glyph_textFrame.paragraphs.everyItem().appliedParagraphStyle = paraStyleGlyph;
@@ -280,7 +278,7 @@ function makeTileGroupArrayWithNumber(cGlyph, cPage){
 
   // make textFrame for the unicode number
   var number_textFrame = cPage.textFrames.add({
-    geometricBounds: [20, 9, tileYsize, 18],
+    geometricBounds: [20, 9, tileHeight, 18],
     contents: "u+" + cGlyph.number
   });
   number_textFrame.paragraphs.everyItem().appliedParagraphStyle = paraStyleNumber;
@@ -294,7 +292,7 @@ function makeTileGroupArrayWithName(cGlyph, cPage){
   var cGroup = new Array();
   // make rectangle for the ScribbleField
   var myRect = cPage.rectangles.add({
-    geometricBounds:[0,0,19,tileXsize],
+    geometricBounds:[0,0,19,tileWidth],
   });
   myRect.appliedObjectStyle = objStyleScribbleField;
   cGroup.push(myRect);
@@ -319,51 +317,48 @@ function makeGuideLines(){
 
   for(var fontIndex = 0; fontIndex < fontList.length; fontIndex++){
 
-    currentPage = doc.pages.add();
 
     // get the font you want the metrics from
     var currentFont = fontList[fontIndex];
+    for(var i = 0; i < 2; i++){
 
-    // apply the master for the left page
-    currentPage.appliedMaster = doc.masterSpreads.item(1);
+      currentPage = doc.pages.add();
+      // apply the master for the left page
+      currentPage.appliedMaster = doc.masterSpreads.item(1);
+       // get the name of the current font 
+      var fontName = currentFont.FontName.toString();
+      // and put it in a textframe on top of the page
+      var fontNameFrame = currentPage.textFrames.add({
+        geometricBounds: [gutter*2, leftMargin, topMargin - gutter, pageWidth-rightMargin],
+        contents: funSentence + fontName
+      });
 
-     // get the name of the current font 
-    var fontName = currentFont.FontName.toString();
-    // and put it in a textframe on top of the page
-    var fontNameFrame = currentPage.textFrames.add({
-      geometricBounds: [gutter*2, leftMargin, topMargin - gutter, pageWidth-rightMargin],
-      contents: funSentence + fontName
-    });
-    fontNameFrame.paragraphs.everyItem().appliedParagraphStyle = doc.paragraphStyles.itemByName("FontName");
-
-    // an empty array for the metric lines
-    var lineGroupArray = new Array();
-
-    // make the baseline
-    lineGroupArray.push(makeALine(0));
-    // make the other metric lines with the makeALine function
-    for(k in currentFont.HkxpArray){
-      lineGroupArray.push(makeALine(currentFont.HkxpArray[k]));
+      fontNameFrame.paragraphs.everyItem().appliedParagraphStyle = doc.paragraphStyles.itemByName("FontName");
+      for(var currentRow = 0; currentRow < tileRows; currentRow++){
+        for(var currentColumn = 0; currentColumn < tileColumns; currentColumn++){
+        
+          // make theLineGroup
+            var lineGroupArray = makeALineGroupArray(currentFont.HkxpArray)
+          var theLineGroup = currentPage.groups.add(lineGroupArray);
+          // move theLineGroup to its position
+          theLineGroup.move(undefined, [leftMargin + currentPage.marginPreferences.columnsPositions[currentColumn * 2], currentRow * tileHeight + topMargin]);
+        }
+      }
     }
-    // apply the right objectstyles to the lines. this is not elegant but it serves the purpose
-    lineGroupArray[0].appliedObjectStyle = doc.objectStyles.itemByName("baseline");
-    lineGroupArray[1].appliedObjectStyle = doc.objectStyles.itemByName("H height (capitals)");
-    lineGroupArray[2].appliedObjectStyle = doc.objectStyles.itemByName("k height (ascenders)");
-    lineGroupArray[3].appliedObjectStyle = doc.objectStyles.itemByName("x height");
-    lineGroupArray[4].appliedObjectStyle = doc.objectStyles.itemByName("p height (descenders)");
 
-    //add the lineGroupArray as a group to the page
-    currentPage.groups.add(lineGroupArray);
 
-    for(var row_index = 0; row_index < 8; row_index++){
-    // duplicate Group to position
-      currentPage.groups.lastItem().duplicate(undefined, [0,(row_index * tileYsize)]);
-    }
-    // remove the first goup because we dont need it any more
-    currentPage.groups.firstItem().remove();
-    //making the facing page
-    currentPage = doc.pages.add();
-    currentPage.appliedMaster = doc.masterSpreads.item(1);
+    // for(var row_index = 0; row_index < 8; row_index++){
+    //   for (var coloumn_index = 0; coloumn_index < 0; i++) {
+    //   // duplicate Group to position
+    //     currentPage.groups.lastItem().duplicate(undefined, [(leftMargin + (tileWidth + gutter) * coloumn_index),(row_index * tileHeight)]);
+    //   };
+      
+    // }
+    // // remove the first goup because we dont need it any more
+    // currentPage.groups.firstItem().remove();
+    // //making the facing page
+    // currentPage = doc.pages.add();
+    // currentPage.appliedMaster = doc.masterSpreads.item(1);
 
     var fontMetrics = '\tH: '+currentFont.HkxpArray[0].toFixed(3)
       + '\tk: '+currentFont.HkxpArray[1].toFixed(3)
@@ -377,6 +372,24 @@ function makeGuideLines(){
   }
 }
 
+function makeALineGroupArray(HkxpArray){
+  var lineArray = new Array();
+
+    // make the baseline
+    lineArray.push(makeALine(0));
+    // make the other metric lines with the makeALine function
+    for(k in HkxpArray){
+      lineArray.push(makeALine(HkxpArray[k]));
+    }
+    // apply the right objectstyles to the lines. this is not elegant but it serves the purpose
+    lineArray[0].appliedObjectStyle = doc.objectStyles.itemByName("baseline");
+    lineArray[1].appliedObjectStyle = doc.objectStyles.itemByName("H height (capitals)");
+    lineArray[2].appliedObjectStyle = doc.objectStyles.itemByName("k height (ascenders)");
+    lineArray[3].appliedObjectStyle = doc.objectStyles.itemByName("x height");
+    lineArray[4].appliedObjectStyle = doc.objectStyles.itemByName("p height (descenders)");
+
+    return lineArray;
+}
 /**
  * [makeALine this function make a horizontal line at a given y position]
  * @param  {[float]} metricsValue [this serves as y position]
@@ -384,14 +397,14 @@ function makeGuideLines(){
  */
 function makeALine(metricsValue){
 
-  var lineYpos = (metricsValue.toFixed(2) * (-scribbleHeight)) + baseLineOffset + topMargin;
+  var lineYpos = (metricsValue.toFixed(2) * (-scribbleHeight)) + baseLineOffset;
 
   var currentLine = currentPage.graphicLines.add();
   var currentPath = currentLine.paths[0];
   var point01 = currentPath.pathPoints[0];
   var point02 = currentPath.pathPoints[1];
   point01.anchor = [0,lineYpos];
-  point02.anchor = [pageWidth * 2 ,lineYpos];
+  point02.anchor = [tileWidth ,lineYpos];
 
   // currentLine.appliedObjectStyle = doc.objectStyles.itemByName("baseline");
 
