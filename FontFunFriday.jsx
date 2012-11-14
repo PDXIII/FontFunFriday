@@ -67,18 +67,12 @@ doc.masterSpreads.item(0).pages.item(1).marginPreferences.properties = {
   columnGutter : gutter
 };
 
-// colors
-var black25 = doc.colors.add({
-  name:"black25",
-  model:ColorModel.PROCESS,
-  space:ColorSpace.CMYK,
-  colorValue:[0,0,0,25]});
 
 // text styles
 var paraStyleBasicFontStyle = doc.paragraphStyles.add({
   name: "BasicFontStyle",
   pointSize: 6,
-  fillColor: "black25",
+  fillColor: "Black",
 });
 var paraStyleFontName = doc.paragraphStyles.add({
   name: "FontName",
@@ -108,7 +102,7 @@ var paraStyleName = doc.paragraphStyles.add({
   name: "GlyphName",
   basedOn: paraStyleBasicFontStyle,
   pointSize: 6,
-  fillColor: "Paper",
+  fillColor: "Black",
   justification: Justification.CENTER_ALIGN
 });
 
@@ -124,34 +118,35 @@ var objStyleScribbleField = doc.objectStyles.add({
   topRightCornerRadius: 3,
   bottomLeftCornerRadius: 3,
   bottomRightCornerRadius: 3,
-  strokeWeight:0,
-  fillColor: "black25"
+  strokeWeight:0.25,
+  strokeColor: "Black",
+  fillColor: "Paper"
 });
 
 var objStyleBaseline = doc.objectStyles.add({
   name: "baseline",
   strokeWeight:0.25,
-  strokeColor: "Paper"
+  strokeColor: "Black"
 });
 var objStyleHLine = doc.objectStyles.add({
   name: "H height (capitals)",
   strokeWeight:0.25,
-  strokeColor: "Paper"
+  strokeColor: "Black"
 });
 var objStyleKLine = doc.objectStyles.add({
   name: "k height (ascenders)",
   strokeWeight:0.25,
-  strokeColor: "Paper"
+  strokeColor: "Black"
 });
 var objStyleXLine = doc.objectStyles.add({
   name: "x height",
   strokeWeight:0.25,
-  strokeColor: "Paper"
+  strokeColor: "Black"
 });
 var objStylePLine = doc.objectStyles.add({
   name: "p height (descenders)",
   strokeWeight:0.25,
-  strokeColor: "Paper"
+  strokeColor: "Black"
 });
 
 var masterPageIndex = 0;
