@@ -187,13 +187,13 @@ The above copyright notice and this permission notice shall be included in all c
 
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-[FFF-Title]: http://pdxiii.github.com/FontFunFriday/images/FFF-Title.png
-[PDXIII-Avatar]: http://pdxiii.github.com/FontFunFriday/images/PDXIII-Avatar.png
-[dialog]: http://pdxiii.github.com/FontFunFriday/images/dialog.png
-[metrics]: http://pdxiii.github.com/FontFunFriday/images/metrics.png
-[tile1]: http://pdxiii.github.com/FontFunFriday/images/tile1.png
-[tile2]: http://pdxiii.github.com/FontFunFriday/images/tile2.png
-[grid]: http://pdxiii.github.com/FontFunFriday/images/grid.png
-[masters]: http://pdxiii.github.com/FontFunFriday/images/masters.png
-[objectStyles]: http://pdxiii.github.com/FontFunFriday/images/objectStyles.png
-[paraStyles]: http://pdxiii.github.com/FontFunFriday/images/paraStyles.png
+[FFF-Title]: http://pdxiii.github.io/FontFunFriday/images/FFF-Title.jpg
+[PDXIII-Avatar]: http://pdxiii.github.io/FontFunFriday/images/PDXIII-Avatar.png
+[dialog]: http://pdxiii.github.io/FontFunFriday/images/dialog.png
+[metrics]: http://pdxiii.github.io/FontFunFriday/images/metrics.png
+[tile1]: http://pdxiii.github.io/FontFunFriday/images/tile1.png
+[tile2]: http://pdxiii.github.io/FontFunFriday/images/tile2.png
+[grid]: http://pdxiii.github.io/FontFunFriday/images/grid.png
+[masters]: http://pdxiii.github.io/FontFunFriday/images/masters.png
+[objectStyles]: http://pdxiii.github.io/FontFunFriday/images/objectStyles.png
+[paraStyles]: http://pdxiii.github.io/FontFunFriday/images/paraStyles.png
